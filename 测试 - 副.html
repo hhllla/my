@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+#zz{
+    z-index: 99;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+#nd1{
+    transition: all 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    widows: 100wh;
+    height: 33vh;
+font-size: 5rem;
+font-weight: bold;
+    background: #0ff; 
+}
+#nd1:hover{
+    background:#000;
+}
+#nd2{
+    transition: all 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    widows: 100wh;
+    height: 33vh;
+font-size: 5rem;
+font-weight: bold;
+    background: #f0f; 
+}
+#nd2:hover{
+    background:#000;
+}
+#nd3{
+    transition: all 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    widows: 100wh;
+    height: 34vh;
+font-size: 5rem;
+font-weight: bold;
+    background: #f00; 
+}
+#nd3:hover{
+    background:#000;
+}
+
+
+
+        #count{
+            z-index: 1;
+            overflow: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform: rotate(180deg);
+        }
+        #main{
+            width: 100vh;
+            transition: 0.5s all linear;
+        }
+      .c1{
+          margin-left: 0vw;
+          width: 25vw;
+          height: 23vh;
+          background: #000;
+      }
+
+      .c2{
+          margin-left: 25vw;
+          width: 25vw;
+          height: 23vh;
+          background: #000;
+      }
+      
+      .c3{
+          margin-left: 50vw;
+          width: 25vw;
+          height: 23vh;
+          background: #000;
+      }
+      
+      .c4{
+          margin-left: 75vw;
+          width: 25vw;
+          height: 23vh;
+          background: #000;
+      }
+      #timea{
+          transform: rotate(180deg);
+          position: absolute;
+          color: #f00;
+          bottom: 2%;
+          font-weight:bold;
+          left:3% ;
+          font-size: 18px;
+
+      }
+    
+    </style>
+</head>
+<body>
+    <div id="zz">
+     
+        <div id="nd1">简单</div>
+      <div id="nd2">一般</div>
+      <div id="nd3">炼狱</div>
+
+    </div>
+
+    <div id="count">
+        <div id="timea">0.0</div>
+         <div id="main">
+         </div>
+    </div>
+</body>
+<script>
+
+
+var timea = document.getElementById('timea');
+var timerun = 0.0;
+var nd1 = document.getElementById('nd1');
+var nd2 = document.getElementById('nd2');
+var nd3 = document.getElementById('nd3');
+zz = document.getElementById('zz');
+var main = document.getElementById('main');
+var jd = 0;    
+var jsq2 = 0;
+var nd;
+var ks = false;
+
+
+//难度
+document.getElementById('nd1').addEventListener('touchstart',function(){   
+     setTimeout(function(){zz.style.display='none'},500); 
+     ks = true;
+    nd= 50;
+   
+console.log(nd)
+for(var i =0; i <= nd ;i++){
+    var cdiv = document.createElement("div");
+    document.getElementById('main').appendChild(cdiv);
+
+     sj = Math.random() * 10;
+
+			if (sj > 0 && sj <= 2.5) {
+				cdiv.className = 'c1'
+			}
+			if (sj > 2.5 && sj <= 5) {
+				cdiv.className = 'c2'
+			}
+			if (sj > 5 && sj <= 7.5) {
+				cdiv.className = 'c3'
+			}
+			if (sj > 7.5 && sj <= 10) {
+				cdiv.className = 'c4'
+			}
+
+  }
+
+//计时器
+var ms = 0;
+ var secs = 0;  
+var mins = '';
+    var jsq1 = setInterval(function(){
+        ms+=1;
+   if(ms>=100){
+         secs+=1;
+         ms = 00;
+    }
+    if(secs>=60){
+ 
+        mins+=1;    
+       secs = 00;
+    }
+    if(secs==27){
+        clearInterval(jsq1);
+
+    }
+       timea.innerHTML=mins+'' +secs+':'+ms+'S' 
+    },10)
+
+
+  c1 = document.querySelectorAll('.c1');
+ c2 = document.querySelectorAll('.c2');
+ c3 = document.querySelectorAll('.c3');
+ c4 = document.querySelectorAll('.c4');
+
+// var rectobj= c1.getBoundingClientRect();
+//  var hdgd = c1.rectobj.top;
+// console.log(hdgd);
+
+
+//  main.style.marginTop = 500 + 'px';
+        //一秒后开始
+setTimeout(function go(){
+    var timer = setInterval(function(){
+              
+            
+              jd -= 150;
+              
+              main.style.marginTop = jd + 'px';
+          
+  
+  },500) 
+
+},1000)
+
+
+
+
+
+for(var k = 0;k < c1.length;k++){
+    c1[k].addEventListener('touchstart',function(){
+        this.style.background = 'white';
+        event.stopPropagation();
+
+        //  console.log(mt)
+        // var sx = c1[k].getBoundingClientRect().top;
+        //   if(sx==0){
+        //       console.log(sx);
+        //   }     
+    }) 
+}
+
+for(var t = 0;t < c2.length;t++){
+    c2[t].addEventListener('touchstart',function(){
+        
+        this.style.background = 'white';
+        //  this.style.display = 'none'
+         //none后方块会衔接下降  ***
+        event.stopPropagation();
+    }) 
+}
+
+for(var s = 0;s < c3.length;s++){
+    c3[s].addEventListener('touchstart',function(){
+        
+        this.style.background = 'white';
+        event.stopPropagation();
+    }) 
+}
+
+for(var q = 0;q < c4.length;q++){
+    c4[q].addEventListener('touchstart',function(){
+    
+        this.style.background = 'white';
+        event.stopPropagation();
+    }) 
+}
+
+
+
+
+
+})
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 一般难度
+document.getElementById('nd2').addEventListener('touchstart',function(){   
+     setTimeout(function(){zz.style.display='none'},500);      
+     ks = true;
+     nd = 150;
+     for(var i =0; i <= nd ;i++){
+    var cdiv = document.createElement("div");
+    document.getElementById('main').appendChild(cdiv);
+
+     sj = Math.random() * 10;
+
+			if (sj > 0 && sj <= 2.5) {
+				cdiv.className = 'c1'
+			}
+			if (sj > 2.5 && sj <= 5) {
+				cdiv.className = 'c2'
+			}
+			if (sj > 5 && sj <= 7.5) {
+				cdiv.className = 'c3'
+			}
+			if (sj > 7.5 && sj <= 10) {
+				cdiv.className = 'c4'
+			}
+
+  }
+
+//计时器
+  var jsn = 0;
+    var jsq1 = setInterval(function(){
+      jsn++;        
+        time.innerHTML=jsn;
+    },10)
+
+
+  c1 = document.querySelectorAll('.c1');
+ c2 = document.querySelectorAll('.c2');
+ c3 = document.querySelectorAll('.c3');
+ c4 = document.querySelectorAll('.c4');
+
+ var timer = setInterval(function(){
+    jd--;
+    main.style.marginTop = jd + 'px';
+},5) 
+
+
+
+for(var k = 0;k < c1.length;k++){
+    c1[k].addEventListener('touchstart',function(){
+        this.style.background = 'white';
+        event.stopPropagation();
+        // var sx = c1[k].getBoundingClientRect().top;
+        //   if(sx==0){
+        //       console.log(sx);
+        //   }     
+    }) 
+}
+
+for(var t = 0;t < c2.length;t++){
+    c2[t].addEventListener('touchstart',function(){
+        
+        this.style.background = 'white';
+        event.stopPropagation();
+    }) 
+}
+
+for(var s = 0;s < c3.length;s++){
+    c3[s].addEventListener('touchstart',function(){
+        
+        this.style.background = 'white';
+        event.stopPropagation();
+    }) 
+}
+
+for(var q = 0;q < c4.length;q++){
+    c4[q].addEventListener('touchstart',function(){
+    
+        this.style.background = 'white';
+        event.stopPropagation();
+    }) 
+}
+    })
+document.getElementById('nd3').addEventListener('touchstart',function(){   
+     setTimeout(function(){zz.style.display='none'},500);   
+     ks = true;   
+      nd = 250;
+      for(var i =0; i <= nd ;i++){
+    var cdiv = document.createElement("div");
+    document.getElementById('main').appendChild(cdiv);
+
+     sj = Math.random() * 10;
+
+			if (sj > 0 && sj <= 2.5) {
+				cdiv.className = 'c1'
+			}
+			if (sj > 2.5 && sj <= 5) {
+				cdiv.className = 'c2'
+			}
+			if (sj > 5 && sj <= 7.5) {
+				cdiv.className = 'c3'
+			}
+			if (sj > 7.5 && sj <= 10) {
+				cdiv.className = 'c4'
+			}
+
+  }
+
+//计时器
+  var jsn = 0;
+    var jsq1 = setInterval(function(){
+      jsn++;        
+        time.innerHTML=jsn;
+    },10)
+
+
+  c1 = document.querySelectorAll('.c1');
+ c2 = document.querySelectorAll('.c2');
+ c3 = document.querySelectorAll('.c3');
+ c4 = document.querySelectorAll('.c4');
+
+ var timer = setInterval(function(){
+    jd--;
+    main.style.marginTop = jd + 'px';
+},5) 
+
+
+
+for(var k = 0;k < c1.length;k++){
+    c1[k].addEventListener('touchstart',function(){
+        this.style.background = 'white';
+        event.stopPropagation();
+        // var sx = c1[k].getBoundingClientRect().top;
+        //   if(sx==0){
+        //       console.log(sx);
+        //   }     
+    }) 
+}
+
+for(var t = 0;t < c2.length;t++){
+    c2[t].addEventListener('touchstart',function(){
+        
+        this.style.background = 'white';
+        event.stopPropagation();
+    }) 
+}
+
+for(var s = 0;s < c3.length;s++){
+    c3[s].addEventListener('touchstart',function(){
+        
+        this.style.background = 'white';
+        event.stopPropagation();
+    }) 
+}
+
+for(var q = 0;q < c4.length;q++){
+    c4[q].addEventListener('touchstart',function(){
+    
+        this.style.background = 'white';
+        event.stopPropagation();
+    }) 
+}
+    })
+
+
+
+   
+
+
+
+
+
+
+  
+
+
+
+//   随机产生黑块 位置
+
+ //获取
+//   c1 = document.querySelectorAll('.c1');
+//  c2 = document.querySelectorAll('.c2');
+//  c3 = document.querySelectorAll('.c3');
+//  c4 = document.querySelectorAll('.c4');
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 下降区
+// var timer = setInterval(function(){
+//     jd--;
+//     main.style.marginTop = jd + 'px';
+// },5) 
+
+
+// for(var k = 0;k < c1.length;k++){
+//     c1[k].addEventListener('touchstart',function(){
+//         this.style.background = 'white';
+//         event.stopPropagation();
+//         // var sx = c1[k].getBoundingClientRect().top;
+//         //   if(sx==0){
+//         //       console.log(sx);
+//         //   }     
+//     }) 
+// }
+
+// for(var t = 0;t < c2.length;t++){
+//     c2[t].addEventListener('touchstart',function(){
+        
+//         this.style.background = 'white';
+//         event.stopPropagation();
+//     }) 
+// }
+
+// for(var s = 0;s < c3.length;s++){
+//     c3[s].addEventListener('touchstart',function(){
+        
+//         this.style.background = 'white';
+//         event.stopPropagation();
+//     }) 
+// }
+
+// for(var q = 0;q < c4.length;q++){
+//     c4[q].addEventListener('touchstart',function(){
+    
+//         this.style.background = 'white';
+//         event.stopPropagation();
+//     }) 
+// }
+
+
+
+
+
+
+////////////////////////////////////////////////////
+
+//   随机产生黑块 位置
+//   for(var i =0;i<4;i++){
+//         var randy = parseInt(Math.floor(Math.random() * 3));
+//        if(i>0&&board[i-1][randy]==1){
+//            randy = parseInt(Math.floor(Math.random()*3))
+//        }
+//         var block = $("#block-"+i+"-"+randy);
+//         block.css("background-color","#000");
+//         board[i][randy]=1;
+//     }
+
+
+//  点击main判定为失败    阻止冒泡进一步传播
+// main.addEventListener('touchstart', touchbox)
+// 			event.stopPropagation()
+		
+//  main.addEventListener('touchstart',function(){
+//     alert("失败");
+// })
+
+
+
+
+        // var c1=document.getElementsByClassName("c1");
+
+// for (var i = 0;i<c1.length;i++) {
+
+//    c1[i].style.background="red";
+    
+
+// for遍历  添加监听点击
+
+
+
+
+// 点击黑块事件
+//    c1[index].addEventListener('touchstart',function(){
+//         c1[index].style.background="gray";      
+//     })
+
+// };
+
+
+
+
+            // 测试------------------------------------------------区
+         //   var c1 = document.querySelectorAll('.c1')
+        //  c1[index].addEventListener('touchstart',function(){
+        //   var arr = new Array();
+
+        //   for(var i = 0;i<obj.length;i++){
+        //       arr[i]=obj[i].style.background='gray'
+        //   }
+
+        // })
+
+
+//       
+    //  c1[index].addEventListener('touchstart',function(){
+    //                    console.log('1')
+    //                 c1[0].style.background = 'gray'
+	// 				c1[0].style.opacity = 0
+	// 				c1[0].style.transform = 'scale(0)'
+
+    //             })
+
+
+//   随机产生黑块 位置
+// window.onload=function myFunction(){
+//     var cdiv = document.createElement("div");
+//     document.getElementById('main').appendChild(cdiv);
+//      cdiv.className = 'c1';
+// };
+
+
+
+
+
+
+
+
+
+
+// <!-- c1 = 方块集合
+// for(a = 1;a<c1.length;a++){
+//     c1[a].touchstart = functtion(){
+//         c1[a].style.background = 'gray';
+//     }
+// } -->
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+</script>
+</html>
+
