@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script type="text/javascript" src=""></script> -->
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+/* *{
+    margin: 0px;
+    padding: 0px;
+} */
+body{
+    background: #3c868d;
+    font:12px/20px "黑体",arial;
+}
+header{
+    display: block;
+    margin: 0 auto;
+    width: 500px;
+    text-align: center;
+}
+header h1{
+    font-family: Arial;
+    font-size: 40px;
+    font-weight: bold;
+}
+#box_container{
+    width: 302px;
+    height: 402px;
+    margin: 50px auto;
+    background-color:#55d769;
+    border: 5px solid#000;
+    position: relative;
+}
+.grid{
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border: 1px solid#000;
+    position: absolute;
+}
+.block{
+    width: 100px;
+    height: 100px;
+    border: 1px solid#000;
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+}
+.gameover{
+    display: block;;
+    margin: 0 auto;
+    width: 300px;
+    text-align: center;
+    vertical-align: middle;
+    position: absolute;
+}
+.gameover p{
+    font-family: Arial;
+    font-size: 50px;
+    color: #f00;
+    margin: 50px auto;
+    margin-top: 150px;
+}
+.gameover span{
+    font-family: Arial;
+    font-size: 50px;
+    color: rgb(219, 63, 63);
+    margin: 50px auto;
+}
+#restartgamebutton{
+    display: block;
+    margin: 20px auto;
+    width: 180px;
+    padding: 10px 10px;
+    background-color: #49949c;
+    font-family: Arial;
+    font-size: 30px;
+    color: #cdfbb7;
+    border-radius: 10px;
+    text-decoration: none;
+}
+#restartgamebutton:hover{
+    background-color: #9f8b77;
+}
+span{
+    color: #000;
+    font-size: 20px;
+}
+/* #nd{
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+} */
+    </style>
+</head>
+<body>
+    <div id="nd">
+        
+    </div>
+    <header>
+        <h1>别踩白块</h1>
+        <div id="time_box"><span>0.000</span>秒</div>
+    </header>
+<div id="box_container">
+<div class="grid" id="grid-0-0"></div>
+<div class="grid" id="grid-0-1"></div>
+<div class="grid" id="grid-0-2"></div>
+<div class="grid" id="grid-1-0"></div>
+<div class="grid" id="grid-1-1"></div>
+<div class="grid" id="grid-1-2"></div>
+<div class="grid" id="grid-2-0"></div>
+<div class="grid" id="grid-2-1"></div>
+<div class="grid" id="grid-2-2"></div>
+<div class="grid" id="grid-3-0"></div>
+<div class="grid" id="grid-3-1"></div>
+<div class="grid" id="grid-3-2"></div>
+
+</div>
+    </body>
+</html>
+<script>
+    // border表示12个黑块
+var board = new Array();
+var timerun = 0.000;  //计时器
+var score = 0;  //重新开始原黑块清零
+var t;  //停止计时
+$(function(){
+    init();
+});
+function init(){
+    for(var i=0;i<4;i++){
+        board[i]=new Array();
+        for(var j=0;j<3;j++){
+            var grid = $("#grid-"+i+"-"+j);
+            grid.css("top",getPosTop(i,j));
+            grid.css("left",getPosLeft(i,j));
+            // 黑块部分
+            $("#box_container").append($("<div class='block' id='block-"+i+"-"+j+"'></div>"));
+       var block = $("#block-"+i+"-"+j);
+       block.css("top",getPosTop(i,j));
+       block.css("left",getPosLeft(i,j));
+            // 
+            board[i][j]=0;
+        }
+    }
+    // 随机黑块
+    for(var i =0;i<4;i++){
+        var randy = parseInt(Math.floor(Math.random() * 3));
+       if(i>0&&board[i-1][randy]==1){
+           randy = parseInt(Math.floor(Math.random()*3))
+       }
+        var block = $("#block-"+i+"-"+randy);
+        block.css("background-color","#000");
+        board[i][randy]=1;
+    }
+    // 提升内容
+    $("#block-3-0").text("按J开始");
+    $("#block-3-1").text("按K开始");
+    $("#block-3-2").text("按L开始");
+    
+}
+function getPosTop(i,j){
+    return i*100;
+}
+
+function getPosLeft(i,j){
+    return j*100;
+}
+
+    //   键盘事件
+    $(document).keydown(function(event){
+        switch(event.keyCode){
+            case 74:
+            if(board[3][0]==1 &&score==0){
+                // 第一次敲击键盘
+                timeRun();
+                clearText();
+                moveDown();
+            }else if(board[3][0]==1 && score>0 && score<100){
+                moveDown();
+            }else{
+                isgameover(); 
+            }
+                break;
+                case 75:
+                if(board[3][1]==1 &&score==0){
+                // 第一次敲击键盘
+                timeRun();
+                clearText();
+                moveDown();
+            }else if(board[3][1]==1 && score>0 && score<100){
+                moveDown();
+            }else{
+                isgameover(); 
+            }
+                break;
+                case 76:
+                if(board[3][2]==1 &&score==0){
+                // 第一次敲击键盘
+                timeRun();
+                clearText();
+                moveDown();
+            }else if(board[3][2]==1 && score>0 && score<100){
+                moveDown();
+            }else{
+                isgameover(); 
+            }
+                break;
+        }
+    });
+
+// 
+function timeRun(){
+  timerun += 0.001;
+//   setTimeout(调用函数，毫秒数)
+$("span").text(timerun.toString().substr(0,5));
+ t = setTimeout("timeRun()",1);
+}
+
+
+// 去掉文本内容
+function clearText(){
+    $("#block-3-0").text("");
+    $("#block-3-1").text("");
+    $("#block-3-2").text("");
+}
+
+
+   function moveDown(){
+             for(var i=3;i>=0;i--){
+                for(var j=2;j>=0;j--){
+                if(board[i][j] ==1){
+                    
+                     if(i==3){
+                         $("#block-"+i+"-"+j).css("background-color","#fff")
+                         board[i][j]=0;
+                     }else{
+                        $("#block-"+i+"-"+j).css("background-color","#fff")
+                        board[i][j]=0;
+                        $("#block-"+(i+1)+"-"+j).css("background-color","#000")
+                        board[i+1][j]=1;
+                    }
+                }
+                 }
+             }
+
+            //  第一行重新随机一个黑块位置
+            var randy = parseInt(Math.floor(Math.random() * 3));
+            var block = $("#block-0-"+randy);
+        block.css("background-color","#000");
+        board[0][randy]=1;
+        score +=1;
+   }
+   function isgameover(){
+// 停止计时器
+clearInterval(t);
+// 游戏结束提示
+$("#box_container").append("<div id='gameover' class='gameover'><p>本次用时</p><span> " + timerun.toString().substr(0,5) + "秒</span><a href='javascript:restartgame();' id='restartgamebutton'>Restart</a></div>");
+var gameover = $("#gameover");
+gameover.css("width","300px");
+gameover.css("height","400px");
+gameover.css("background-color","rgba(0,0,0,0.5)");
+}
+// 重新开始游戏
+function restartgame(){
+$("#gameover").remove();
+$("time_box").html("<span>0.000</span>"+"秒");
+// 去掉上局黑块
+$(".block").remove();
+score = 0;
+    init();
+}
+
+</script>
